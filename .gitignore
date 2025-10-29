@@ -1,0 +1,19 @@
+# Build artifacts
+target/
+*.class
+*.jar
+*.war
+
+# IDE settings
+.idea/
+.vscode/
+*.iml
+
+# Logs and temp files
+*.log
+*.tmp
+
+# Environment files
+.env
+application.yml
+
