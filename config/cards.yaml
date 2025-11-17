@@ -1,0 +1,18 @@
+
+
+build:
+  version: 3.0
+
+
+cards:
+  message: "Welcome to Eazy Bank Cards Related Local Development Api's"
+  contactInfo:
+    name: Karthik Kaliki - Developer
+    email: karthikkaliki2000@gmail.com
+    linkedin: https://www.linkedin.com/in/karthik-kaliki/
+  onCallSupport:
+    - "+91 9381173415"
+    - "+91 9705389485"
+
+  support-hours: "9 AM - 6 PM IST"
+  active: true
