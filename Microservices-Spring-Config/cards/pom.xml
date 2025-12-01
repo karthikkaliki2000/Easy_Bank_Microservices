@@ -99,6 +99,11 @@
             <artifactId>spring-cloud-starter-bus-amqp</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
 
     </dependencies>
 
@@ -148,7 +153,7 @@
                 <version>3.4.6</version>
                 <configuration>
                     <to>
-                        <image>karthikkaliki/cards:v3</image>
+                        <image>karthikkaliki/cards:v5</image>
                     </to>
                 </configuration>
             </plugin>

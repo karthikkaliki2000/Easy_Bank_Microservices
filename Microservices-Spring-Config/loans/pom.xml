@@ -93,6 +93,12 @@
         </dependency>
 
 
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+
     </dependencies>
 
     <dependencyManagement>
@@ -146,7 +152,7 @@
                 <version>3.4.6</version>
                 <configuration>
                     <to>
-                        <image>karthikkaliki/loans:v3</image>
+                        <image>karthikkaliki/loans:v5</image>
                     </to>
                 </configuration>
             </plugin>

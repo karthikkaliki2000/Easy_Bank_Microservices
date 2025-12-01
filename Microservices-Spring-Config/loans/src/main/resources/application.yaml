@@ -39,9 +39,49 @@ spring:
     password: guest
 
 management:
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
   endpoints:
     web:
       exposure:
         include: "*"
+  endpoint:
+    shutdown:
+      access: unrestricted
+    health:
+      probes:
+        enabled: true
 
+  info:
+    env:
+      enabled: true
+
+
+eureka:
+  instance:
+    preferIpAddress: true
+    service-id: loans
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8070/eureka/
+
+
+info:
+  app:
+    name: "loans"
+    description: "Eazy Bank Related Loans Microservice"
+    version: "1.0.0"
+
+
+
+logging:
+  level:
+    com:
+      eazybank:
+        loans: DEBUG
 
