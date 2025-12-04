@@ -1,4 +1,15 @@
 services:
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli ping | grep PONG" ]
+      timeout: 10s
+      retries: 10
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
   accountsdb:
     container_name: accountsdb
     ports:
@@ -46,7 +57,7 @@ services:
       service: network-deploy-service
 
   configserver:
-    image: "karthikkaliki/configserver:v5"
+    image: "karthikkaliki/configserver:v6"
     container_name: configserver-ms
     ports:
       - "8071:8071"
@@ -64,7 +75,7 @@ services:
       service: microservice-base-config
 
   eurekaserver:
-    image: "karthikkaliki/eurekaserver:v5"
+    image: "karthikkaliki/eurekaserver:v6"
     container_name: eurekaserver-ms
     ports:
       - "8070:8070"
@@ -84,7 +95,7 @@ services:
       SPRING_APPLICATION_NAME: "eurekaserver"
 
   gatewayserver:
-    image: "karthikkaliki/gatewayserver:v5"
+    image: "karthikkaliki/gatewayserver:v6"
     container_name: gatewayserver-ms
     ports:
       - "8072:8072"
@@ -104,15 +115,17 @@ services:
         condition: service_healthy
       cards:
         condition: service_healthy
-#      accounts:
-#        condition: service_healthy
-#      loans:
-#        condition: service_healthy
-#      cards:
-#        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "gatewayserver"
+      SPRING_DATA_REDIS_CONNECT-TIMEOUT: 2s
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      SPRING_DATA_REDIS_TIMEOUT: 1s
 
   accounts:
-    image: "karthikkaliki/accounts:v5"
+    image: "karthikkaliki/accounts:v6"
     container_name: accounts-ms
     ports:
       - "8080:8080"
@@ -137,7 +150,7 @@ services:
       service: microservice-eurekaserver-config
 
   loans:
-    image: "karthikkaliki/loans:v5"
+    image: "karthikkaliki/loans:v6"
     container_name: loans-ms
     ports:
       - "8090:8090"
@@ -210,7 +223,7 @@ services:
 #      service: microservice-eurekaserver-config
 
   cards:
-    image: "karthikkaliki/cards:v5"
+    image: "karthikkaliki/cards:v6"
     container_name: cards-ms
     ports:
       - "9000:9000"
