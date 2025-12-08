@@ -1,0 +1,16 @@
+# Ignore MinIO runtime data
+Microservices-Spring-Config/docker-compose/default/.data/
+Microservices-Spring-Config/docker-compose/prod/.data/
+Microservices-Spring-Config/docker-compose/qa/.data/
+# Ignore logs
+*.log
+
+# Ignore IDE/editor settings
+.idea/
+.vscode/
+*.iml
+
+# Ignore build artifacts
+target/
+build/
+out/
