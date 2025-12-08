@@ -1,7 +1,9 @@
 # Ignore MinIO runtime data
-Microservices-Spring-Config/docker-compose/default/.data/
-Microservices-Spring-Config/docker-compose/prod/.data/
-Microservices-Spring-Config/docker-compose/qa/.data/
+Microservices-Spring-Config/docker-compose/default/.data/*
+Microservices-Spring-Config/docker-compose/prod/.data/*
+Microservices-Spring-Config/docker-compose/qa/.data/*
+
+
 # Ignore logs
 *.log
 
