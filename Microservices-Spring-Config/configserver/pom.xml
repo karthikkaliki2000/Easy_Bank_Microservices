@@ -97,7 +97,7 @@
                 <version>3.4.6</version>
                 <configuration>
                     <to>
-                        <image>karthikkaliki/configserver:v7</image>
+                        <image>karthikkaliki/configserver:v8</image>
                     </to>
                 </configuration>
             </plugin>

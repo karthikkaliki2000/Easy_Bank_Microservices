@@ -165,7 +165,7 @@
                 <version>3.4.6</version>
                 <configuration>
                     <to>
-                        <image>karthikkaliki/loans:v7</image>
+                        <image>karthikkaliki/loans:v8</image>
                     </to>
                 </configuration>
             </plugin>

@@ -16,3 +16,6 @@ Microservices-Spring-Config/docker-compose/qa/.data/*
 target/
 build/
 out/
+
+
+**/.data/
