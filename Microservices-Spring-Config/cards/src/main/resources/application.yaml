@@ -28,12 +28,12 @@ spring:
 #    show-sql: true
   config:
     import:
-      - "optional:configserver:http://localhost:8071/"
+      - "optional:configserver:http://configserver:8071/"
   profiles:
     active:
       - "prod"
   rabbitmq:
-    host: "localhost"
+    host: rabbit
     port: 5672
     username: guest
     password: guest

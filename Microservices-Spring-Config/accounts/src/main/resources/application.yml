@@ -17,6 +17,15 @@ spring:
     openfeign:
       circuitbreaker:
         enabled: true
+    function:
+      definition: updateCommunication
+    stream:
+      bindings:
+        updateCommunication-in-0:
+          destination: communication-sent
+          group: ${spring.application.name}
+        sendCommunication-out-0:
+          destination: send-communication
   #  datasource:
   #    url: jdbc:h2:mem:testdb
   #    driverClassName: org.h2.Driver
@@ -32,15 +41,16 @@ spring:
   #    show-sql: true
   config:
     import:
-      - "optional:configserver:http://localhost:8071/"
+      - "optional:configserver:http://configserver:8071/"
   profiles:
     active:
       - "dev"
   rabbitmq:
-    host: "localhost"
+    host: rabbit
     port: 5672
     username: guest
     password: guest
+    connection-timeout: 10s
 
 
 management:

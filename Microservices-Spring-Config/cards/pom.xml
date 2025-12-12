@@ -169,7 +169,7 @@
                 <version>3.4.6</version>
                 <configuration>
                     <to>
-                        <image>karthikkaliki/cards:v8</image>
+                        <image>karthikkaliki/cards:v9</image>
                     </to>
                 </configuration>
             </plugin>

@@ -1,4 +1,19 @@
 services:
+  rabbit:
+    image: rabbitmq:4.0-management
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
   keycloak:
     image: quay.io/keycloak/keycloak:26.4.0
     container_name: keycloak
@@ -267,26 +282,10 @@ services:
       file: common-config.yml
       service: microservice-db-config
 
-  rabbit:
-    image: rabbitmq:3.13-management
-    hostname: rabbitmq
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    environment: # <<< ADD THIS BLOCK
-      - RABBITMQ_ERLANG_COOKIE=aA08FjDkS3xYq9pZsT2rR4wL6mN1vB7cE5gHjKtIuOp # <<< ADD THIS LINE
-    healthcheck:
-      test: rabbitmq-diagnostics check_port_connectivity
-      interval: 20s
-      timeout: 5s
-      retries: 20
-      start_period: 5s
-    extends:
-      file: common-config.yml
-      service: network-deploy-service
+
 
   configserver:
-    image: "karthikkaliki/configserver:v8"
+    image: "karthikkaliki/configserver:v9"
     container_name: configserver-ms
     ports:
       - "8071:8071"
@@ -306,7 +305,7 @@ services:
       OTEL_SERVICE_NAME: "configserver"
 
   eurekaserver:
-    image: "karthikkaliki/eurekaserver:v8"
+    image: "karthikkaliki/eurekaserver:v9"
     container_name: eurekaserver-ms
     ports:
       - "8070:8070"
@@ -327,7 +326,7 @@ services:
       OTEL_SERVICE_NAME: "eurekaserver"
 
   gatewayserver:
-    image: "karthikkaliki/gatewayserver:v8"
+    image: "karthikkaliki/gatewayserver:v9"
     container_name: gatewayserver-ms
     ports:
       - "8072:8072"
@@ -359,7 +358,7 @@ services:
       SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: "http://keycloak:8080/realms/master/protocol/openid-connect/certs"
 
   accounts:
-    image: "karthikkaliki/accounts:v8"
+    image: "karthikkaliki/accounts:v9"
     container_name: accounts-ms
 #    ports:
 #      - "8080:8080"
@@ -376,16 +375,19 @@ services:
         condition: service_healthy
       eurekaserver:
         condition: service_healthy
+      rabbit:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "accounts"
       SPRING_DATASOURCE_URL: "jdbc:mysql://accountsdb:3306/accountsdb"
       OTEL_SERVICE_NAME: "accounts"
+      SPRING_RABBITMQ_HOST: "rabbit"
     extends:
       file: common-config.yml
       service: microservice-eurekaserver-config
 
   loans:
-    image: "karthikkaliki/loans:v8"
+    image: "karthikkaliki/loans:v9"
     container_name: loans-ms
 #    ports:
 #      - "8090:8090"
@@ -459,7 +461,7 @@ services:
 #      service: microservice-eurekaserver-config
 
   cards:
-    image: "karthikkaliki/cards:v8"
+    image: "karthikkaliki/cards:v9"
     container_name: cards-ms
 #    ports:
 #      - "9000:9000"
@@ -484,6 +486,17 @@ services:
     extends:
       file: common-config.yml
       service: microservice-eurekaserver-config
+  message:
+    image: "karthikkaliki/message:v9"
+    container_name: message-ms
+    depends_on:
+      rabbit:
+        condition: service_healthy
+    environment:
+      SPRING_RABBITMQ_HOST: "rabbit"
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
 
 
 networks:
