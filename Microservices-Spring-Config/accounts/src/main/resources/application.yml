@@ -20,12 +20,29 @@ spring:
     function:
       definition: updateCommunication
     stream:
+      default-binder: rabbit
       bindings:
+        # Consumer (Input) - Must use RabbitMQ
         updateCommunication-in-0:
           destination: communication-sent
           group: ${spring.application.name}
+          binder: rabbit # Explicitly use RabbitMQ binder
+
+        # Producer (Output to message-ms via RabbitMQ)
         sendCommunication-out-0:
           destination: send-communication
+          binder: rabbit # Explicitly use RabbitMQ binder
+
+        # Producer (Output to Kafka)
+        publishAccountEvent-out-0:
+          destination: accounts-topic-v1
+          binder: kafka # Explicitly use Kafka binder
+
+
+      kafka:
+        binder:
+          brokers:
+            - kafka:9092
   #  datasource:
   #    url: jdbc:h2:mem:testdb
   #    driverClassName: org.h2.Driver

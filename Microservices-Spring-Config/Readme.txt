@@ -105,3 +105,42 @@ Add Grafana dashboards for Accounts, Loans, Cards metrics.
 Integrate distributed tracing with Tempo + OpenTelemetry.
 
 Use RabbitMQ exchanges/queues for async communication between services.
+
+
+⚙️ Docker Setup for EazyBank Microservices
+This guide explains how to run the required infrastructure containers (MySQL, Redis, Kafka) for the EazyBank microservices project.
+
+🗄️ MySQL Databases
+Each microservice has its own dedicated MySQL instance:
+
+bash
+# Accounts Service DB
+docker run -p 3306:3306 --name accountsdb \
+  -e MYSQL_ROOT_PASSWORD=root \
+  -e MYSQL_DATABASE=accountsdb \
+  -d mysql
+
+# Loans Service DB
+docker run -p 3307:3306 --name loansdb \
+  -e MYSQL_ROOT_PASSWORD=root \
+  -e MYSQL_DATABASE=loansdb \
+  -d mysql
+
+# Cards Service DB
+docker run -p 3308:3306 --name cardsdb \
+  -e MYSQL_ROOT_PASSWORD=root \
+  -e MYSQL_DATABASE=cardsdb \
+  -d mysql
+⚡ Redis Cache
+bash
+docker run -p 6379:6379 --name eazyredis -d redis
+📡 Apache Kafka
+bash
+docker run -p 9092:9092 apache/kafka:4.1.1
+🛠️ Handling Port Conflicts
+If a port is already in use (e.g., 8080):
+
+bash
+netstat -ano | findstr :8080
+taskkill /PID <process_id> /F
+Replace <process_id> with the actual PID from the netstat output.

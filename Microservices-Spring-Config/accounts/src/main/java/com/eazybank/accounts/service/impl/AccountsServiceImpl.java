@@ -2,6 +2,7 @@ package com.eazybank.accounts.service.impl;
 
 import com.eazybank.accounts.constants.AccountsConstants;
 import com.eazybank.accounts.dto.AccountsDto;
+import com.eazybank.accounts.dto.AccountsEventDto;
 import com.eazybank.accounts.dto.AccountsMsgDto;
 import com.eazybank.accounts.dto.CustomerDto;
 import com.eazybank.accounts.entity.Accounts;
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
@@ -47,7 +49,8 @@ public class AccountsServiceImpl implements IAccountsService {
         Customer savedCustomer=customerRepository.save(customer);
 
         Accounts savedAccount=accountsRepository.save(createNewAccount(savedCustomer));
-sendCommunication(savedAccount,savedCustomer);
+        sendCommunication(savedAccount,savedCustomer);
+        publishAccountEvent(savedAccount, savedCustomer);
     }
 
     private void sendCommunication(Accounts account, Customer customer) {
@@ -56,6 +59,24 @@ sendCommunication(savedAccount,savedCustomer);
         logger.info("Sending Communication request for the details: {}", accountsMsgDto);
         var result = streamBridge.send("sendCommunication-out-0", accountsMsgDto);
         logger.info("Is the Communication request successfully triggered ? : {}", result);
+    }
+
+    private void publishAccountEvent(Accounts account, Customer customer) {
+        // Create the DTO using the new record structure
+        AccountsEventDto eventDto = new AccountsEventDto(
+                account.getAccountNumber(),
+                "ACCOUNT_CREATED",
+                customer.getMobileNumber(),
+                customer.getEmail(),
+                Instant.now() // Use java.time.Instant for a precise, standardized timestamp
+        );
+
+        logger.info("Publishing ACCOUNT_CREATED event to Kafka: {}", eventDto);
+
+        // Use the binding name defined for the Kafka output channel in application.yml
+        // The binding name is 'publishAccountEvent-out-0'
+        var result = streamBridge.send("publishAccountEvent-out-0", eventDto);
+        logger.info("Is the Kafka event successfully published? : {}", result);
     }
 
 

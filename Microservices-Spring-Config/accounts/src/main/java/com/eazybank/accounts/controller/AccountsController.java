@@ -47,7 +47,7 @@ public class AccountsController {
 
     private final IAccountsService iAccountsService;
 
-private static final Logger logger= LoggerFactory.getLogger(AccountsController.class);
+    private static final Logger logger= LoggerFactory.getLogger(AccountsController.class);
     private final Environment environment;
 
     private final AccountsContactsInfoDto accountsContactsInfoDto;
@@ -59,7 +59,7 @@ private static final Logger logger= LoggerFactory.getLogger(AccountsController.c
         this.accountsContactsInfoDto=accountsContactsInfoDto;
     }
 
-    @Value("${build.version}")
+    @Value("${build.version:1.0.0-LOCAL}") // <-- Add a default value after the colon
     private String buildVersion;
 
 
