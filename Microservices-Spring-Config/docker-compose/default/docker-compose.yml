@@ -43,6 +43,9 @@ services:
       timeout: 5s
       retries: 10
       start_period: 5s
+    volumes:
+      - ./data/rabbitmq:/var/lib/rabbitmq/
+    user: "999:999"
     extends:
       file: common-config.yml
       service: network-deploy-service
@@ -530,8 +533,22 @@ services:
       kafka:
         condition: service_healthy
     environment:
-      SPRING_RABBITMQ_HOST: "rabbit"
-      SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: "kafka:9092"
+      SPRING_MAIL_HOST: "smtp.gmail.com"
+      SPRING_MAIL_PORT: 587
+      SPRING_MAIL_USERNAME: "karthikkaliki2000@gmail.com"
+      SPRING_MAIL_PASSWORD: "egfu fdak ontd rxyl"
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: "true"
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_ENABLE: "true"
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST: "smtp.gmail.com"
+
+
+      # --- Twilio ---
+      TWILIO_ACCOUNT_SID: "ACdf764349e1db274a1062e2b0314e7a68"
+      TWILIO_AUTH_TOKEN: "25fa89c295316c34828f226cd1e595fa"
+      TWILIO_MESSAGING_SERVICE_SID: "MGcf9f454dc0f0705471a819cfd9e8fd81"
+      TWILIO_FROM_NUMBER: "+13369758969"
+
     extends:
       file: common-config.yml
       service: network-deploy-service
