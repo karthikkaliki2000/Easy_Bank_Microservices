@@ -82,6 +82,10 @@ spec:
         - name: SPRING_DATASOURCE_URL
           {{- if .Values.db.dbUrl }}
           value: {{ .Values.db.dbUrl | quote }}
+          {{- else if .Values.dbUrl }}
+          value: {{ .Values.dbUrl | quote }}
+          {{- else if .Values.global.dbUrl }}
+          value: {{ .Values.global.dbUrl | quote }}
           {{- else }}
           valueFrom: 
             configMapKeyRef:
