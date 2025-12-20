@@ -8,9 +8,9 @@ data:
   SPRING_CONFIG_IMPORT: {{ .Values.global.configServerURL }}
   EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: {{ .Values.global.eurekaServerURL }}
   SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: {{ .Values.global.keyCloakURL }}
-{{- if .Values.global.openTelemetryJavaAgent }}
-  JAVA_TOOL_OPTIONS: {{ .Values.global.openTelemetryJavaAgent }}
-{{- end }}
+  # Make the key always present to avoid CreateContainerConfigError when
+  # consumer deployments reference the key as a non-optional configMapKeyRef
+  JAVA_TOOL_OPTIONS: {{ .Values.global.openTelemetryJavaAgent | default "" | quote }}
   OTEL_EXPORTER_OTLP_ENDPOINT: {{ .Values.global.otelExporterEndPoint }}
   OTEL_METRICS_EXPORTER: {{ .Values.global.otelMetricsExporter }}
   OTEL_LOGS_EXPORTER: {{ .Values.global.otelLogsExporter }}
