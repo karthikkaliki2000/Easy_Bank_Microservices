@@ -1,0 +1,18 @@
+replicaCount: 1
+
+image:
+  repository: mysql
+  tag: 8.0
+  pullPolicy: IfNotPresent
+
+# This name is critical; it becomes the network hostname
+appName: accountsdb
+
+# Database initialization settings
+db:
+  name: accountsdb
+  rootPassword: root
+
+service:
+  type: ClusterIP
+  port: 3306

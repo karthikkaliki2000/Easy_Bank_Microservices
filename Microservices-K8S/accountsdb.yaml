@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: accountsdb-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: accountsdb
+  template:
+    metadata:
+      labels:
+        app: accountsdb
+    spec:
+      containers:
+        - name: accountsdb
+          image: mysql:8.0
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "root"
+            - name: MYSQL_DATABASE
+              value: "accountsdb"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: accountsdb
+spec:
+  selector:
+    app: accountsdb
+  ports:
+    - port: 3306
+      targetPort: 3306

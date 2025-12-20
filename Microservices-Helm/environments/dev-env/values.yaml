@@ -1,0 +1,51 @@
+global:
+  configMapName: eazybankdev-configmap
+  activeProfile: default
+  configServerURL: "http://configserver:8071/"
+  eurekaServerURL: "http://eurekaserver:8070/eureka/"
+  keyCloakURL: "http://keycloak.default.svc.cluster.local:80/realms/master/protocol/openid-connect/certs"
+  openTelemetryJavaAgent: "-javaagent:/app/opentelemetry-javaagent.jar"
+  otelExporterEndPoint: "http://tempo.default.svc.cluster.local:4318"
+  otelMetricsExporter: none
+  otelLogsExporter: none
+  kafkaBrokerURL: "kafka-controller-0.kafka-controller-headless.default.svc.cluster.local:9092"
+  dbUser: "root"
+  dbPassword: "root"
+  rabbitHost: "rabbitmq"
+
+# Dev Sub-chart Overrides
+accounts:
+  replicaCount: 1
+  dbUrl: "jdbc:mysql://accountsdb:3306/accountsdb"
+  appName: "accounts"
+
+cards:
+  replicaCount: 1
+  dbUrl: "jdbc:mysql://cardsdb:3306/cardsdb"
+  appName: "cards"
+
+loans:
+  replicaCount: 1
+  dbUrl: "jdbc:mysql://loansdb:3306/loansdb"
+  appName: "loans"
+
+gatewayserver:
+  replicaCount: 1
+  service:
+    type: LoadBalancer # Access your bank locally via this
+
+# Database Sub-chart Overrides
+accountsdb:
+  appName: "accountsdb"
+  db:
+    name: "accountsdb"
+
+cardsdb:
+  appName: "cardsdb"
+  db:
+    name: "cardsdb"
+
+loansdb:
+  appName: "loansdb"
+  db:
+    name: "loansdb"

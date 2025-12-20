@@ -1,0 +1,32 @@
+deploymentName: configserver-deployment
+serviceName: configserver
+appLabel: configserver
+appName: configserver
+
+replicaCount: 1
+
+image:
+  repository: eazybytes/configserver
+  tag: s14
+
+containerPort: 8071
+
+service:
+  type: ClusterIP
+  port: 8071
+  targetPort: 8071
+
+# Feature Toggles
+appname_enabled: true
+profile_enabled: false # ConfigServer doesn't fetch profiles from a ConfigMap
+config_enabled: false # ConfigServer doesn't import from itself
+eureka_enabled: false # Set to true only if you want ConfigServer to register with Eureka
+resouceserver_enabled: false
+otel_enabled: true # Keep observability active
+kafka_enabled: false # ConfigServer usually doesn't need Kafka
+mysql_enabled: false # ConfigServer uses Git/Native, not MySQL
+
+# Shared Global Settings (Alignment)
+global:
+  configMapName: eazybankdev-configmap
+  activeProfile: default

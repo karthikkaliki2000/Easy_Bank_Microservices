@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: configserver-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: configserver
+  template:
+    metadata:
+      labels:
+        app: configserver
+    spec:
+      containers:
+        - name: configserver
+          image: karthikkaliki/configserver:v10
+          ports:
+            - containerPort: 8071
+          imagePullPolicy: Always
+          env:
+            # FIX: The key used to decrypt {cipher} values in prod profile
+            - name: ENCRYPT_KEY
+              value: "EazyBankSecretKey"
+            - name: SPRING_RABBITMQ_HOST
+              value: "rabbit"
+            - name: SPRING_APPLICATION_NAME
+              value: "configserver"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: configserver
+spec:
+  selector:
+    app: configserver
+  ports:
+    - port: 8071
+      targetPort: 8071
