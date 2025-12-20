@@ -4,7 +4,8 @@ global:
   configServerURL: "http://configserver:8071/"
   eurekaServerURL: "http://eurekaserver:8070/eureka/"
   keyCloakURL: "http://keycloak.default.svc.cluster.local:80/realms/master/protocol/openid-connect/certs"
-  openTelemetryJavaAgent: "-javaagent:/app/opentelemetry-javaagent.jar"
+  # Disabled by default in dev to avoid JVM crash if agent binary is not present
+  openTelemetryJavaAgent: ""
   otelExporterEndPoint: "http://tempo.default.svc.cluster.local:4318"
   otelMetricsExporter: none
   otelLogsExporter: none
