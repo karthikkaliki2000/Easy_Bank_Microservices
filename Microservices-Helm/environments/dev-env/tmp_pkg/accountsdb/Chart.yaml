@@ -1,6 +1,0 @@
-apiVersion: v2
-appVersion: "8.0"
-description: MySQL database for Accounts microservice
-name: accountsdb
-type: application
-version: 0.1.0

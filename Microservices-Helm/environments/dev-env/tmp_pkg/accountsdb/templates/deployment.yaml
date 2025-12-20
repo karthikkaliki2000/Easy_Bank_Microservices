@@ -1,7 +1,0 @@
-metadata:
-  name: {{ .Values.appName }}-deployment
-spec:
-  template:
-    metadata:
-      labels:
-        app: {{ .Values.appName }}
