@@ -1,7 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: {{ .Values.appName }}-deployment
+  labels:
+    app: {{ .Values.appName }}
 spec:
+  replicas: {{ .Values.replicaCount | default 1 }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
   template:
     metadata:
       labels:
         app: {{ .Values.appName }}
+    spec:
+      containers:
+        - name: {{ .Values.appName }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 3306
+              protocol: TCP
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: {{ .Values.db.rootPassword | quote }}
+            - name: MYSQL_DATABASE
+              value: {{ .Values.db.name | quote }}
