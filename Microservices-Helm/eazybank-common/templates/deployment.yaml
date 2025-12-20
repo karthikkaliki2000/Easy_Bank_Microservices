@@ -80,10 +80,14 @@ spec:
         {{- end }}
         {{- if .Values.mysql_enabled }}
         - name: SPRING_DATASOURCE_URL
+          {{- if .Values.db.dbUrl }}
+          value: {{ .Values.db.dbUrl | quote }}
+          {{- else }}
           valueFrom: 
             configMapKeyRef:
               name: {{ .Values.global.configMapName }}
               key: SPRING_DATASOURCE_URL
+          {{- end }}
         - name: SPRING_DATASOURCE_USERNAME
           valueFrom: 
             configMapKeyRef:
