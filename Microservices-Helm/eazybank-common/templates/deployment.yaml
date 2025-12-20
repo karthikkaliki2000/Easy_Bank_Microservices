@@ -78,7 +78,6 @@ spec:
         - name: OTEL_SERVICE_NAME
           value: {{ .Values.appName }}
         {{- end }}
-        {{- end }}
         # Provide a default BUILD_VERSION for all services so ${build.version}
         # placeholders resolve even if the config server isn't available
         - name: BUILD_VERSION
