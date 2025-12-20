@@ -77,6 +77,8 @@ spec:
               key: OTEL_LOGS_EXPORTER
         - name: OTEL_SERVICE_NAME
           value: {{ .Values.appName }}
+        - name: BUILD_VERSION
+          value: {{ .Values.buildVersion | default "dev" | quote }}
         {{- end }}
         {{- if .Values.mysql_enabled }}
         - name: SPRING_DATASOURCE_URL
