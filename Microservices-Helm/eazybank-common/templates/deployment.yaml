@@ -81,7 +81,10 @@ spec:
         # Provide a default BUILD_VERSION for all services so ${build.version}
         # placeholders resolve even if the config server isn't available
         - name: BUILD_VERSION
-          value: {{ .Values.buildVersion | default "dev" | quote }}
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.global.configMapName }}
+              key: BUILD_VERSION
         {{ if .Values.mysql_enabled }}
         - name: SPRING_DATASOURCE_URL
           {{- if .Values.db.dbUrl }}

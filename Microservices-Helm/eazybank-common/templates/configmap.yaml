@@ -19,4 +19,5 @@ data:
   SPRING_DATASOURCE_USERNAME: {{ .Values.global.dbUser }}
   SPRING_DATASOURCE_PASSWORD: {{ .Values.global.dbPassword }}
   SPRING_RABBITMQ_HOST: {{ .Values.global.rabbitHost }}
+  BUILD_VERSION: {{ .Values.global.buildVersion | default "dev" | quote }}
 {{- end -}}
