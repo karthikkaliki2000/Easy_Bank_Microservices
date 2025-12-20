@@ -10,7 +10,7 @@ data:
   SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: {{ .Values.global.keyCloakURL }}
   # Make the key always present to avoid CreateContainerConfigError when
   # consumer deployments reference the key as a non-optional configMapKeyRef
-  JAVA_TOOL_OPTIONS: {{ .Values.global.openTelemetryJavaAgent | default "" | quote }}
+  JAVA_TOOL_OPTIONS: "{{ .Values.global.openTelemetryJavaAgent | default "" }}"
   OTEL_EXPORTER_OTLP_ENDPOINT: {{ .Values.global.otelExporterEndPoint }}
   OTEL_METRICS_EXPORTER: {{ .Values.global.otelMetricsExporter }}
   OTEL_LOGS_EXPORTER: {{ .Values.global.otelLogsExporter }}
