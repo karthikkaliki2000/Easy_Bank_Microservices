@@ -1,0 +1,9 @@
+name: rabbitmq
+replicaCount: 1
+image:
+  repository: rabbitmq
+  tag: 3.11-management
+username: guest
+password: guest
+port: 5672
+managementPort: 15672

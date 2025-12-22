@@ -1,3 +1,6 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
 deploymentName: gatewayserver-deployment
 serviceName: gatewayserver
 appLabel: gatewayserver
@@ -6,29 +9,20 @@ appName: gatewayserver
 replicaCount: 1
 
 image:
-  repository: eazybytes/gatewayserver
-  tag: s14
+  repository: karthikkaliki/gatewayserver
+  tag: v10
 
 containerPort: 8072
 
 service:
-  type: LoadBalancer # Correct: Gateway is the entry point from the internet
+  type: LoadBalancer
   port: 8072
   targetPort: 8072
 
-# Feature Toggles
 appname_enabled: true
 profile_enabled: true
-config_enabled: true # Fetch routing properties from Config Server
-eureka_enabled: true # Needed to discover service locations
-resouceserver_enabled: true # Enable JWT/Security validation
+config_enabled: true
+eureka_enabled: true
+resouceserver_enabled: true
 otel_enabled: true
 kafka_enabled: false
-
-global:
-  configMapName: eazybankdev-configmap
-  activeProfile: default
-  # Infrastructure URLs
-  configServerURL: "configserver:http://configserver:8071/"
-  eurekaServerURL: "http://eurekaserver:8070/eureka/"
-  keyCloakURL: "http://keycloak.default.svc.cluster.local:80/realms/master/protocol/openid-connect/certs"

@@ -43,7 +43,7 @@ public class LoansController {
 
     private final LoansContactsInfoDto loansContactsInfoDto;
 
-    @Value("${build.version}")
+    @Value("${build.version:1.0.0-LOCAL}")
     private String buildVersion;
 
     public LoansController(ILoansService iLoansService,Environment environment,LoansContactsInfoDto loansContactsInfoDto){

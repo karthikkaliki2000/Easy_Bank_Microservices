@@ -1,35 +1,28 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
 deploymentName: cards-deployment
 serviceName: cards
 appLabel: cards
 appName: cards
+
 replicaCount: 1
 
 image:
-  repository: eazybytes/cards
-  tag: s14
+  repository: karthikkaliki/cards
+  tag: v10
 
-containerPort: 9000 # Cards typically runs on 9000
+containerPort: 9000
 
 service:
   type: ClusterIP
   port: 9000
   targetPort: 9000
 
-# Feature Toggles
 appname_enabled: true
 profile_enabled: true
 config_enabled: true
 eureka_enabled: true
 resouceserver_enabled: false
 otel_enabled: true
-kafka_enabled: true
-mysql_enabled: true # Turn this ON for MySQL
-rabbitmq_enabled: true # Turn this ON for RabbitMQ
-
-global:
-  configMapName: eazybankdev-configmap
-  dbUser: "root"
-  dbPassword: "root"
-  dbUrl: "jdbc:mysql://cardsdb:3306/cardsdb" # Points to cardsdb
-  rabbitHost: "rabbitmq"
-  activeProfile: default
+kafka_enabled: false

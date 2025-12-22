@@ -1,35 +1,45 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
 deploymentName: loans-deployment
 serviceName: loans
 appLabel: loans
 appName: loans
+
 replicaCount: 1
 
 image:
-  repository: eazybytes/loans
-  tag: s14
+  repository: karthikkaliki/loans
+  tag: v10
 
-containerPort: 8090 # Loans typically runs on 8090
+containerPort: 8090
 
 service:
   type: ClusterIP
   port: 8090
   targetPort: 8090
 
-# Feature Toggles
 appname_enabled: true
 profile_enabled: true
 config_enabled: true
 eureka_enabled: true
 resouceserver_enabled: false
 otel_enabled: true
-kafka_enabled: true
-mysql_enabled: true
-rabbitmq_enabled: true
+kafka_enabled: false
 
+# Ensure ${build.version} can be resolved by setting a global buildVersion
+# These values will propagate to the common configmap when this chart is used in an umbrella chart
 global:
-  configMapName: eazybankdev-configmap
-  dbUser: "root"
+  buildVersion: "s14"
+  loansDBHost: "loansdb"
+  dbUsername: "root"
   dbPassword: "root"
-  dbUrl: "jdbc:mysql://loansdb:3306/loansdb" # Points to loansdb
-  rabbitHost: "rabbitmq"
-  activeProfile: default
+
+# Optional: explicit datasource properties (some deployments prefer explicit overrides)
+spring:
+  datasource:
+    url: "jdbc:mysql://loansdb:3306/loansdb"
+    username: "root"
+    password: "root"
+# Extra env vars to request from the common ConfigMap
+

@@ -1,0 +1,31 @@
+# Global defaults used by the common chart
+global:
+  configMapName: common-config
+  activeProfile: qa
+  configServerURL: "configserver:8888"
+  eurekaServerURL: "http://eurekaserver:8761/eureka"
+  keyCloakURL: "http://keycloak:8080"
+  openTelemetryJavaAgent: ""
+  otelExporterEndPoint: ""
+  otelMetricsExporter: ""
+  otelLogsExporter: ""
+  kafkaBrokerURL: "kafka:9092"
+
+  # Build/version -- used to satisfy ${build.version} properties in the apps
+  # Sets BUILD_VERSION in the shared ConfigMap to prevent missing property errors
+  buildVersion: "1.0.0"
+
+  # RabbitMQ settings (default to service name `rabbitmq` created by the rabbitmq chart)
+  rabbitmqHost: "rabbitmq"
+  rabbitmqPort: "5672"
+  rabbitmqUsername: "guest"
+  rabbitmqPassword: "guest"
+
+  # Dedicated DB hosts
+  accountsDBHost: "accountsdb"
+  loansDBHost: "loansdb"
+  cardsDBHost: "cardsdb"
+
+  # DB creds
+  dbUsername: "root"
+  dbPassword: "root"

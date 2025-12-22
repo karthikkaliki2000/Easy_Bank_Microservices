@@ -1,52 +1,11 @@
 global:
   configMapName: eazybankqa-configmap
   activeProfile: qa
-  configServerURL: "configserver:http://configserver:8071/"
-  eurekaServerURL: "http://eurekaserver:8070/eureka/"
-  keyCloakURL: "http://keycloak.default.svc.cluster.local:80/realms/master/protocol/openid-connect/certs"
-  openTelemetryJavaAgent: "-javaagent:/opentelemetry-javaagent.jar"
-  otelExporterEndPoint: "http://tempo.default.svc.cluster.local:4318"
+  configServerURL: configserver:http://configserver:8071/
+  eurekaServerURL: http://eurekaserver:8070/eureka/
+  keyCloakURL: http://keycloak.default.svc.cluster.local:80/realms/master/protocol/openid-connect/certs
+  openTelemetryJavaAgent: "-javaagent:/app/libs/opentelemetry-javaagent-2.11.0.jar"
+  otelExporterEndPoint: http://tempo.default.svc.cluster.local:4318
   otelMetricsExporter: none
   otelLogsExporter: none
-  kafkaBrokerURL: "kafka-controller-0.kafka-controller-headless.default.svc.cluster.local:9092"
-  dbUser: "root"
-  dbPassword: "root"
-  rabbitHost: "rabbitmq"
-
-# Subchart Overrides: The key must match the 'name' in Chart.yaml dependencies
-accounts:
-  appName: "accounts"
-  dbUrl: "jdbc:mysql://accountsdb:3306/accountsdb"
-  mysql_enabled: true
-  kafka_enabled: true
-
-cards:
-  appName: "cards"
-  dbUrl: "jdbc:mysql://cardsdb:3306/cardsdb"
-  mysql_enabled: true
-
-loans:
-  appName: "loans"
-  dbUrl: "jdbc:mysql://loansdb:3306/loansdb"
-  mysql_enabled: true
-
-gatewayserver:
-  appName: "gatewayserver"
-  # Gateways might not need a DB, but might need different port configs
-  containerPort: 8072
-
-# Database Sub-chart Overrides
-accountsdb:
-  appName: "accountsdb"
-  db:
-    name: "accountsdb"
-
-cardsdb:
-  appName: "cardsdb"
-  db:
-    name: "cardsdb"
-
-loansdb:
-  appName: "loansdb"
-  db:
-    name: "loansdb"
+  kafkaBrokerURL: kafka-controller-0.kafka-controller-headless.default.svc.cluster.local:9092

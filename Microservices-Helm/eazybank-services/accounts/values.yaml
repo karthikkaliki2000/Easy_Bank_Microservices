@@ -1,13 +1,14 @@
-# 1. Service Specific Settings (Top Level)
+
 deploymentName: accounts-deployment
 serviceName: accounts
 appLabel: accounts
 appName: accounts
+
 replicaCount: 1
 
 image:
-  repository: eazybytes/accounts
-  tag: s14
+  repository: karthikkaliki/accounts
+  tag: v10
 
 containerPort: 8080
 
@@ -16,7 +17,6 @@ service:
   port: 8080
   targetPort: 8080
 
-# 2. Feature Toggles (Top Level)
 appname_enabled: true
 profile_enabled: true
 config_enabled: true
@@ -24,17 +24,3 @@ eureka_enabled: true
 resouceserver_enabled: false
 otel_enabled: true
 kafka_enabled: true
-rabbitmq_enabled: true
-mysql_enabled: true # Ensure this is true to trigger the DB env vars
-
-# 3. Shared Connection Info (MUST BE UNDER GLOBAL)
-global:
-  configMapName: eazybankdev-configmap
-  dbUser: "root"
-  dbPassword: "root"
-  dbUrl: "jdbc:mysql://accountsdb:3306/accountsdb" # Use 'dbUrl' for this specific service
-  rabbitHost: "rabbitmq"
-  activeProfile: default
-  configServerURL: "http://configserver:8071/"
-  eurekaServerURL: "http://eurekaserver:8070/eureka/"
-  kafkaBrokerURL: "kafka:9092"

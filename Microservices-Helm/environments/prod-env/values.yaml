@@ -1,49 +1,11 @@
 global:
   configMapName: eazybankprod-configmap
   activeProfile: prod
-  configServerURL: "http://configserver:8071/"
-  eurekaServerURL: "http://eurekaserver:8070/eureka/"
-  keyCloakURL: "http://keycloak.default.svc.cluster.local:80/realms/master/protocol/openid-connect/certs"
-  openTelemetryJavaAgent: "-javaagent:/opentelemetry-javaagent.jar"
-  otelExporterEndPoint: "http://tempo.default.svc.cluster.local:4318"
+  configServerURL: configserver:http://configserver:8071/
+  eurekaServerURL: http://eurekaserver:8070/eureka/
+  keyCloakURL: http://keycloak.default.svc.cluster.local:80/realms/master/protocol/openid-connect/certs
+  openTelemetryJavaAgent: "-javaagent:/app/libs/opentelemetry-javaagent-2.11.0.jar"
+  otelExporterEndPoint: http://tempo.default.svc.cluster.local:4318
   otelMetricsExporter: none
   otelLogsExporter: none
-  kafkaBrokerURL: "kafka-controller-0.kafka-controller-headless.default.svc.cluster.local:9092"
-  dbUser: "prod_user" # Typically changed for Prod
-  dbPassword: "prod_password"
-  rabbitHost: "rabbitmq-prod"
-
-# Prod Sub-chart Overrides
-accounts:
-  replicaCount: 2 # Redundancy for Production
-  dbUrl: "jdbc:mysql://accountsdb-prod:3306/accountsdb"
-  appName: "accounts"
-
-cards:
-  replicaCount: 2
-  dbUrl: "jdbc:mysql://cardsdb-prod:3306/cardsdb"
-  appName: "cards"
-
-loans:
-  replicaCount: 2
-  dbUrl: "jdbc:mysql://loansdb-prod:3306/loansdb"
-  appName: "loans"
-
-gatewayserver:
-  replicaCount: 2
-
-# Database Sub-chart Overrides
-accountsdb:
-  appName: "accountsdb"
-  db:
-    name: "accountsdb"
-
-cardsdb:
-  appName: "cardsdb"
-  db:
-    name: "cardsdb"
-
-loansdb:
-  appName: "loansdb"
-  db:
-    name: "loansdb"
+  kafkaBrokerURL: kafka-controller-0.kafka-controller-headless.default.svc.cluster.local:9092

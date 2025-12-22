@@ -1,52 +1,73 @@
 global:
   configMapName: eazybankdev-configmap
   activeProfile: default
-  configServerURL: "http://configserver:8071/"
-  eurekaServerURL: "http://eurekaserver:8070/eureka/"
-  keyCloakURL: "http://keycloak.default.svc.cluster.local:80/realms/master/protocol/openid-connect/certs"
-  # Disabled by default in dev to avoid JVM crash if agent binary is not present
+  configServerURL: configserver:http://configserver:8071/
+  eurekaServerURL: http://eurekaserver:8070/eureka/
+  keyCloakURL: http://keycloak.default.svc.cluster.local:80/realms/master/protocol/openid-connect/certs
   openTelemetryJavaAgent: ""
-  otelExporterEndPoint: "http://tempo.default.svc.cluster.local:4318"
+  otelExporterEndPoint: http://tempo.default.svc.cluster.local:4318
   otelMetricsExporter: none
   otelLogsExporter: none
-  kafkaBrokerURL: "kafka-controller-0.kafka-controller-headless.default.svc.cluster.local:9092"
-  dbUser: "root"
+  kafkaBrokerURL: kafka-controller-0.kafka-controller-headless.default.svc.cluster.local:9092
+  # RabbitMQ host used by services
+  rabbitmqHost: "rabbitmq"
+  SPRING_RABBITMQ_HOST: "rabbitmq"
+  # Explicit build and DB host overrides to ensure configmap contains expected keys
+  buildVersion: "1.0.0"
+  accountsDBHost: "accountsdb"
+  loansDBHost: "loansdb"
+  cardsDBHost: "cardsdb"
+  dbUsername: "root"
   dbPassword: "root"
-  rabbitHost: "rabbitmq"
+  # ensure explicit configmap keys (force presence)
+  BUILD_VERSION: "1.0.0"
+  SPRING_DATASOURCE_URL_ACCOUNTS: "jdbc:mysql://accountsdb:3306/accountsdb"
+  SPRING_DATASOURCE_URL_LOANS: "jdbc:mysql://loansdb:3306/loansdb"
+  SPRING_DATASOURCE_URL_CARDS: "jdbc:mysql://cardsdb:3306/cardsdb"
+  SPRING_DATASOURCE_DRIVER_CLASS_NAME: "com.mysql.cj.jdbc.Driver"
 
-# Dev Sub-chart Overrides
+# Per-service overrides
 accounts:
-  replicaCount: 1
-  dbUrl: "jdbc:mysql://accountsdb:3306/accountsdb"
-  appName: "accounts"
-
-cards:
-  replicaCount: 1
-  dbUrl: "jdbc:mysql://cardsdb:3306/cardsdb"
-  appName: "cards"
+  mysql_enabled: true
+  rabbitmq_enabled: true
+  spring:
+    datasource:
+      url: "jdbc:mysql://accountsdb:3306/accountsdb"
 
 loans:
-  replicaCount: 1
-  dbUrl: "jdbc:mysql://loansdb:3306/loansdb"
-  appName: "loans"
+  mysql_enabled: true
+  rabbitmq_enabled: true
+  spring:
+    datasource:
+      url: "jdbc:mysql://loansdb:3306/loansdb"
+  extraEnv:
+    - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+      key: SPRING_DATASOURCE_DRIVER_CLASS_NAME
 
-gatewayserver:
-  replicaCount: 1
-  service:
-    type: LoadBalancer # Access your bank locally via this
+cards:
+  mysql_enabled: true
+  rabbitmq_enabled: true
+  spring:
+    datasource:
+      url: "jdbc:mysql://cardsdb:3306/cardsdb"
+# Per-service overrides
+accounts:
+  mysql_enabled: true
+  rabbitmq_enabled: true
+  spring:
+    datasource:
+      url: "jdbc:mysql://accountsdb:3306/accountsdb"
 
-# Database Sub-chart Overrides
-accountsdb:
-  appName: "accountsdb"
-  db:
-    name: "accountsdb"
+loans:
+  mysql_enabled: true
+  rabbitmq_enabled: true
+  spring:
+    datasource:
+      url: "jdbc:mysql://loansdb:3306/loansdb"
 
-cardsdb:
-  appName: "cardsdb"
-  db:
-    name: "cardsdb"
-
-loansdb:
-  appName: "loansdb"
-  db:
-    name: "loansdb"
+cards:
+  mysql_enabled: true
+  rabbitmq_enabled: true
+  spring:
+    datasource:
+      url: "jdbc:mysql://cardsdb:3306/cardsdb"

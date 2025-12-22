@@ -1,6 +1,0 @@
-apiVersion: v2
-name: cardsdb
-description: MySQL database for Cards microservice
-type: application
-version: 0.1.0
-appVersion: "8.0"

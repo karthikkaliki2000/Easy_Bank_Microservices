@@ -1,0 +1,10 @@
+{{- /* temporary debug template to inspect values */ -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dev-env-debug
+data:
+  BUILD_VERSION_VALUE: "{{ .Values.global.buildVersion }}"
+  BUILD_VERSION_CAP: "{{ .Values.global.BUILD_VERSION }}"
+  SPRING_DATASOURCE_URL_LOANS_VALUE: "{{ .Values.global.SPRING_DATASOURCE_URL_LOANS }}"
+  LOANS_DB_HOST: "{{ .Values.global.loansDBHost }}"

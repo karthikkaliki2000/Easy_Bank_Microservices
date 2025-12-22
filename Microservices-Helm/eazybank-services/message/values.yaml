@@ -1,12 +1,16 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
 deploymentName: message-deployment
 serviceName: message
 appLabel: message
 appName: message
+
 replicaCount: 1
 
 image:
-  repository: eazybytes/message
-  tag: s14
+  repository: karthikkaliki/message
+  tag: v10
 
 containerPort: 9010
 
@@ -15,7 +19,6 @@ service:
   port: 9010
   targetPort: 9010
 
-# Feature Toggles
 appname_enabled: true
 profile_enabled: false
 config_enabled: false
@@ -23,12 +26,3 @@ eureka_enabled: false
 resouceserver_enabled: false
 otel_enabled: false
 kafka_enabled: true
-mysql_enabled: false # Message service usually doesn't need a DB
-rabbitmq_enabled: true # Set to true if it consumes from RabbitMQ
-
-global:
-  configMapName: eazybankdev-configmap
-  # Shared infrastructure info
-  rabbitHost: "rabbitmq"
-  kafkaBrokerURL: "kafka:9092"
-  activeProfile: default

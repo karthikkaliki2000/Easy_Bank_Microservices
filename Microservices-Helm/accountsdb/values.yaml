@@ -1,0 +1,7 @@
+name: accountsdb
+replicaCount: 1
+image:
+  repository: mysql
+  tag: 8.0
+rootPassword: root
+database: accountsdb

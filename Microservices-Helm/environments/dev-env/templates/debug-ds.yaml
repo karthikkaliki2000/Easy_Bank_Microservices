@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dev-env-debug-ds
+  labels:
+    debug: "true"
+data:
+{{- $srv := dict "ACCOUNTS" (.Values.global.accountsDBHost | default "accountsdb") "LOANS" (.Values.global.loansDBHost | default "loansdb") "CARDS" (.Values.global.cardsDBHost | default "cardsdb") }}
+{{- range $k, $v := $srv }}
+  {{ printf "SPRING_DATASOURCE_URL_%s" $k }}: "jdbc:mysql://{{ $v }}:3306/{{ lower $k }}"
+{{- end }}

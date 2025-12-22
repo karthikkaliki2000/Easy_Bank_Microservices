@@ -31,19 +31,19 @@ dependencies:
   - name: configserver
     version: 0.1.0
     repository: file://../../eazybank-services/configserver
-
+    
   - name: eurekaserver
     version: 0.1.0
     repository: file://../../eazybank-services/eurekaserver
-
+  
   - name: accounts
     version: 0.1.0
     repository: file://../../eazybank-services/accounts
-
+    
   - name: cards
     version: 0.1.0
     repository: file://../../eazybank-services/cards
-
+    
   - name: loans
     version: 0.1.0
     repository: file://../../eazybank-services/loans
@@ -55,14 +55,3 @@ dependencies:
   - name: message
     version: 0.1.0
     repository: file://../../eazybank-services/message
-  - name: accountsdb
-    version: 0.1.0
-    repository: file://../../eazybank-services/accountsdb
-
-  - name: cardsdb
-    version: 0.1.0
-    repository: file://../../eazybank-services/cardsdb
-
-  - name: loansdb
-    version: 0.1.0
-    repository: file://../../eazybank-services/loansdb

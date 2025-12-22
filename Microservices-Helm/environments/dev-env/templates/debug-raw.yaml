@@ -1,0 +1,8 @@
+{{- $s := include "common.configmap" . -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dev-env-debug-raw
+data:
+  rendered: |-
+{{ $s | indent 4 }}

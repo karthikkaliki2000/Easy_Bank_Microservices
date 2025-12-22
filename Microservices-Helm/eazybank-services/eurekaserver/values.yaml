@@ -1,3 +1,6 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
 deploymentName: eurekaserver-deployment
 serviceName: eurekaserver
 appLabel: eurekaserver
@@ -6,8 +9,8 @@ appName: eurekaserver
 replicaCount: 1
 
 image:
-  repository: eazybytes/eurekaserver
-  tag: s14
+  repository: karthikkaliki/eurekaserver
+  tag: v10
 
 containerPort: 8070
 
@@ -16,18 +19,10 @@ service:
   port: 8070
   targetPort: 8070
 
-# Feature Toggles
 appname_enabled: true
-profile_enabled: false # Typically false as it gets profile from Config Server
-config_enabled: true # TRUE because Eureka needs to talk to Config Server
-eureka_enabled: false # FALSE because Eureka cannot register with itself
+profile_enabled: false
+config_enabled: true
+eureka_enabled: false
 resouceserver_enabled: false
-otel_enabled: true # Enable for tracing
+otel_enabled: true
 kafka_enabled: false
-mysql_enabled: false # Eureka doesn't use a database
-
-global:
-  configMapName: eazybankdev-configmap
-  activeProfile: default
-  # Points to the Config Server so Eureka can fetch its settings
-  configServerURL: "configserver:http://configserver:8071/"
