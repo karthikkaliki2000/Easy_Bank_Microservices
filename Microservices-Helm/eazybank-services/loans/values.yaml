@@ -26,7 +26,8 @@ eureka_enabled: true
 resouceserver_enabled: false
 otel_enabled: true
 kafka_enabled: false
-
+database_enabled: true
+rabbitmq_enabled: true
 # Ensure ${build.version} can be resolved by setting a global buildVersion
 # These values will propagate to the common configmap when this chart is used in an umbrella chart
 global:

@@ -9,8 +9,8 @@ appName: message
 replicaCount: 1
 
 image:
-  repository: karthikkaliki/message
-  tag: v10
+  repository: eazybytes/message
+  tag: s14
 
 containerPort: 9010
 
@@ -26,3 +26,5 @@ eureka_enabled: false
 resouceserver_enabled: false
 otel_enabled: false
 kafka_enabled: true
+database_enabled: false
+rabbitmq_enabled: true

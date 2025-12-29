@@ -1,7 +1,7 @@
 {{- /* helper: only the data block */ -}}
 {{ define "common.configmap.data" }}
   SPRING_PROFILES_ACTIVE: {{ .Values.global.activeProfile }}
-  SPRING_CONFIG_IMPORT: {{ .Values.global.configServerURL }}
+  SPRING_CONFIG_IMPORT: "optional:configserver:{{ .Values.global.configServerURL }}"
   EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: {{ .Values.global.eurekaServerURL }}
   SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: {{ .Values.global.keyCloakURL }}
   JAVA_TOOL_OPTIONS: {{ .Values.global.openTelemetryJavaAgent }}
@@ -16,7 +16,16 @@
   SPRING_RABBITMQ_USERNAME: "{{ .Values.global.rabbitmqUsername | default "guest" }}"
   SPRING_RABBITMQ_PASSWORD: "{{ .Values.global.rabbitmqPassword | default "guest" }}"
   # service-specific datasource URLs (generated dynamically)
-{{- $srv := dict "ACCOUNTS" (.Values.global.accountsDBHost | default "accountsdb") "LOANS" (.Values.global.loansDBHost | default "loansdb") "CARDS" (.Values.global.cardsDBHost | default "cardsdb") -}}
+  # Includes non-DB services too so Helm envFrom/configMapKeyRef lookups never fail
+{{- $srv := dict
+      "ACCOUNTS"     (.Values.global.accountsDBHost      | default "accountsdb")
+      "LOANS"        (.Values.global.loansDBHost         | default "loansdb")
+      "CARDS"        (.Values.global.cardsDBHost         | default "cardsdb")
+      "CONFIGSERVER" (.Values.global.configserverDBHost  | default "localhost")
+      "EUREKASERVER" (.Values.global.eurekaserverDBHost  | default "localhost")
+      "GATEWAYSERVER"(.Values.global.gatewayserverDBHost | default "localhost")
+      "MESSAGE"      (.Values.global.messageDBHost       | default "localhost")
+    -}}
 {{- range $k, $v := $srv }}
   {{ printf "SPRING_DATASOURCE_URL_%s" $k }}: "jdbc:mysql://{{ $v }}:3306/{{ $v }}"
 {{- end }}

@@ -1,0 +1,3 @@
+VHOST: /
+QUEUE: communication-sent.accounts
+INDEX: v2

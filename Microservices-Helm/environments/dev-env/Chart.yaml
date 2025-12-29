@@ -25,7 +25,7 @@ appVersion: "1.0.0"
 
 dependencies:
   - name: eazybank-common
-    version: 0.1.1
+    version: 0.1.0
     repository: file://../../eazybank-common
 
   - name: configserver
@@ -55,3 +55,16 @@ dependencies:
   - name: message
     version: 0.1.0
     repository: file://../../eazybank-services/message
+
+  - name: accountsdb
+    version: 0.1.0
+    repository: file://../../eazybank-services/accountsdb
+
+  - name: cardsdb
+    version: 0.1.0
+    repository: file://../../eazybank-services/cardsdb
+  
+  # Ensure loansdb is also here if it wasn't already (you mentioned it was running, but check)
+  - name: loansdb
+    version: 0.1.0
+    repository: file://../../eazybank-services/loansdb

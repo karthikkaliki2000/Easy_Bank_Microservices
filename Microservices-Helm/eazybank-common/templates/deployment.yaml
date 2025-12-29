@@ -18,6 +18,9 @@ spec:
       containers:
       - name: {{ .Values.appLabel }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        envFrom:
+            - configMapRef:
+                name: {{ .Values.global.configMapName }}
         ports:
         - containerPort: {{ .Values.containerPort }}
           protocol: TCP
@@ -93,6 +96,7 @@ spec:
               name: {{ .Values.global.configMapName }}
               key: BUILD_VERSION
 
+        {{- if .Values.database_enabled }}
         - name: SPRING_DATASOURCE_URL
           valueFrom:
             configMapKeyRef:
@@ -110,7 +114,9 @@ spec:
             configMapKeyRef:
               name: {{ .Values.global.configMapName }}
               key: SPRING_DATASOURCE_PASSWORD
+        {{- end }}
 
+        {{- if .Values.rabbitmq_enabled }}
         - name: SPRING_RABBITMQ_HOST
           valueFrom:
             configMapKeyRef:
@@ -134,6 +140,7 @@ spec:
             configMapKeyRef:
               name: {{ .Values.global.configMapName }}
               key: SPRING_RABBITMQ_PASSWORD
+        {{- end }}
 
         {{- if .Values.extraEnv }}
         # Extra env entries provided by the service chart (name/key entries)

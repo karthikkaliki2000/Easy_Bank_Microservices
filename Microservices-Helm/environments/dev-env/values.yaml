@@ -1,7 +1,7 @@
 global:
   configMapName: eazybankdev-configmap
   activeProfile: default
-  configServerURL: configserver:http://configserver:8071/
+  configServerURL: "http://configserver:8071/"
   eurekaServerURL: http://eurekaserver:8070/eureka/
   keyCloakURL: http://keycloak.default.svc.cluster.local:80/realms/master/protocol/openid-connect/certs
   openTelemetryJavaAgent: ""
@@ -25,7 +25,8 @@ global:
   SPRING_DATASOURCE_URL_LOANS: "jdbc:mysql://loansdb:3306/loansdb"
   SPRING_DATASOURCE_URL_CARDS: "jdbc:mysql://cardsdb:3306/cardsdb"
   SPRING_DATASOURCE_DRIVER_CLASS_NAME: "com.mysql.cj.jdbc.Driver"
-
+  
+  # SPRING_DATASOURCE_URL_GATEWAYSERVER: "none"
 # Per-service overrides
 accounts:
   mysql_enabled: true
@@ -71,3 +72,10 @@ cards:
   spring:
     datasource:
       url: "jdbc:mysql://cardsdb:3306/cardsdb"
+
+message:
+  profile_enabled: true
+  config_enabled: true
+  eureka_enabled: true
+  kafka_enabled: true
+  rabbitmq_enabled: true
